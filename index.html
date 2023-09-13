@@ -1,0 +1,109 @@
+<!doctype html>
+<html data-bs-theme="light" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport"/>
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>PyScript MemFS Example</title>
+
+    <!-- PyScript -->
+    <link href="https://pyscript.net/releases/2023.03.1/pyscript.css" rel="stylesheet"/>
+    <script defer src="https://pyscript.net/releases/2023.03.1/pyscript.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link href="css/main.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<section class="pyscript">
+
+    <py-config>
+        packages = ['pandas', 'openpyxl']
+
+        [splashscreen]
+        enabled = true
+    </py-config>
+
+    <py-script src="./src/main.py"></py-script>
+
+    <py-script>
+        # Proxy objects
+        js.process_form_files = create_proxy(process_form_files)
+        js.list_files = create_proxy(list_files)
+
+        # Event listeners
+        add_event_listener(js.document.getElementById("text-output-event"), "click", write_to_page)
+
+        # Tasks
+        asyncio.create_task(clock_forever())
+    </py-script>
+
+</section>
+
+<header>
+    <div class="container">
+        <h1>PyScript MemFS Example</h1>
+    </div>
+</header>
+
+<main>
+    <div class="form-box">
+        <form onsubmit="process_form_files(); return false">
+
+            <div class="input-group">
+                <label for="file1">Файл Excel #1:</label>
+                <input aria-describedby="helpId" id="file1" name="file1" placeholder=""
+                       type="file">
+            </div>
+
+            <label for="file2">Файл Excel #2:</label>
+            <input id="file2" name="file2" required type="file">
+            <br>
+            <p><input type="submit" class="submit-btn" value="Обработать данные"></p>
+
+            <div id="save-container"></div>
+        </form>
+        <hr>
+        <div class="tech">
+            <details>
+                <summary>Технические функции</summary>
+                <div class="service">
+
+                    <button class="mb-1" onclick="list_files()">Показать файлы на Virtual FS</button>
+                    <button class="mb-1" onclick="showGlobalFiles()">Показать RESULT_FILE из Python в консоли js
+                    </button>
+                    <script>
+                        function showGlobalFiles() {
+                            console.log(`Python global variable = ${pyscript.interpreter.globals.get('RESULT_FILE')}`)
+                        }
+                    </script>
+
+                    <!-- py-terminal placement -->
+                    <py-terminal auto></py-terminal>
+
+                </div>
+
+                <button class="py-button mb-1" id="text-pyclick" py-click="write_to_page()">Вывести текст через
+                    py-click
+                </button>
+                <button class="mb-1" id="text-output-event" type="button">Вывести текст через обработчик
+                    add_event_listener
+                </button>
+                <div id="manual-write"></div>
+
+            </details>
+
+        </div>
+
+</main>
+<hr>
+<footer>
+    <div class="clock">
+        <p class="clock__caption">
+            Текущее время: <span class="clock__time" id="clock-output"></span>
+        </p>
+    </div>
+</footer>
+
+</body>
+</html>

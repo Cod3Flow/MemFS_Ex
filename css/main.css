@@ -1,0 +1,38 @@
+/* fix: Pyscript code visibility issue */
+.pyscript {
+    display: none;
+}
+
+.navbar {
+    background-color: #000000;
+}
+
+.title {
+    color: #f0ab3c;
+}
+
+.link {
+    color: #f0ab3c;
+}
+
+form {
+    margin: 10px;
+}
+
+.form-box {
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+.code_console {
+    border-top: 2px solid red;
+}
+
+button, input[type=submit] {
+    border-radius: 3px;
+}
+
+.clock {
+    color: green;
+    font-style: italic;
+}
