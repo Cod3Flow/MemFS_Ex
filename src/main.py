@@ -168,7 +168,6 @@ def list_files():
 
 
 def write_to_page(*args):
-    # display("Display function example", target="manual-write", append=False)
     display(HTML("<b>Display function example</b><br>"), target="manual-write", append=False)
 
 
